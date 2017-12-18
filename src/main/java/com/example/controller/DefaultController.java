@@ -1,48 +1,28 @@
 package com.example.controller;
 
+import com.example.config.Book;
+import com.example.config.BookCase;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
-/**
- * @Controller annotation will tell SpringBootWebApplication to include this class
- */
 @Controller
+@RequestMapping(value = "/bookcase")
 public class DefaultController {
 
-    /**
-     * localhost:8080/
-     * @return
-     */
-    @RequestMapping("/")
-    public String home() { return "home"; }
+    private BookCase bookCase;
 
-    /**
-     * localhost:8080/home
-     * @return
-     */
-    @RequestMapping("/home")
-    public String home1() { return "home"; }
-
-    /**
-     * localhost:8080/about
-     * @return
-     */
-    @RequestMapping("/about")
-    public String about() { return "about"; }
-
-    /**
-     * localhost:8080/hello
-     * http://localhost:8080/hello?name=Marcus Chiu
-     * http://localhost:8080/hello?name=Marcus%20Chiu
-     * @param name
-     * @param model
-     * @return
-     */
-    @RequestMapping("/hello")
-    public String getHello(@RequestParam(value="name", required = false, defaultValue = "Default Value") String name, Model model) {
-        model.addAttribute("name", name);
-        return "hello";
+    @RequestMapping(method = RequestMethod.GET)
+    @ResponseBody
+    public BookCase getBookCase() {
+        return this.bookCase;
     }
+
+    @RequestMapping(method = RequestMethod.PUT)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void setBookCase(@RequestBody BookCase bookCase) {
+        this.bookCase = bookCase;
+    }
+
 }
